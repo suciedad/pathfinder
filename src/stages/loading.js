@@ -55,18 +55,15 @@ import selectLevelButton from '../assets/buttons/select-level-button.png';
 import quarantinumButton from '../assets/buttons/quarantinum-button.png';
 
 import logo from '../assets/logo.png';
+import { ProgressBar } from '../components/progress-bar';
 
-const PROGRESS = {
-  SIZE: {
-    WIDTH: APP_SIZE.WIDTH * 0.35,
-    HEIGHT: 30,
-    PADDING: 3,
-    BORDER_RADIUS: 5,
-  },
-  COLOR: {
-    BG: 0xbdbdbd,
-    BAR: 0x3db7e3,
-  },
+const PROGRESS_STYLE = {
+  bgColor: 0xbdbdbd,
+  barColor: 0x3db7e3,
+  width: APP_SIZE.WIDTH * 0.35,
+  height: 30,
+  padding: 3,
+  borderRadius: 5,
 }
 
 export class Loading extends Scene {
@@ -76,8 +73,6 @@ export class Loading extends Scene {
 
   preload() {
     const loadingText = this.add.text(0, 0, TEXT.LOADING, { fill: '#ccc', fontSize: '18px' });
-    const progressBg = this.add.graphics();
-    const progressBar = this.add.graphics();
 
     // Blocks
     this.load.image('floor', floor);
@@ -136,33 +131,20 @@ export class Loading extends Scene {
 
     this.load.image('logo', logo);
 
-    progressBg.clear();
-    progressBg.fillStyle(PROGRESS.COLOR.BG, 1);
-    progressBg.fillRoundedRect(
-      APP_SIZE.WIDTH * 0.5 - PROGRESS.SIZE.WIDTH * 0.5,
+    const progressBar = new ProgressBar(
+      this,
+      APP_SIZE.WIDTH * 0.5 - APP_SIZE.WIDTH * 0.35 * 0.5,
       APP_SIZE.HEIGHT * 0.5 + 25 - 35,
-      PROGRESS.SIZE.WIDTH,
-      PROGRESS.SIZE.HEIGHT,
-      PROGRESS.SIZE.BORDER_RADIUS,
-    );
+      0, 1, 0,
+      PROGRESS_STYLE,
+    )
 
     loadingText.x = APP_SIZE.WIDTH * 0.5 - loadingText.width * 0.5;
     loadingText.y = APP_SIZE.HEIGHT * 0.5 - loadingText.height * 0.5 - 35;
 
-    this.load.on('progress', (value) => {
-      progressBar.clear();
-      progressBar.fillStyle(PROGRESS.COLOR.BAR, 1);
-      progressBar.fillRoundedRect(
-        APP_SIZE.WIDTH * 0.5 - PROGRESS.SIZE.WIDTH * 0.5,
-        APP_SIZE.HEIGHT * 0.5 + 25 - 35,
-        PROGRESS.SIZE.WIDTH * value,
-        PROGRESS.SIZE.HEIGHT,
-        PROGRESS.SIZE.BORDER_RADIUS,
-      );
-    });
+    this.load.on('progress', (value) => progressBar.setValue(value));
 
     this.load.on('complete', () => {
-      progressBg.destroy();
       progressBar.destroy();
 
       this.scene.start(SCENE_KEY.MAIN_MENU);
