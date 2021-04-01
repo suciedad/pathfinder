@@ -15,6 +15,7 @@ import level10 from '../maps/level-8';
 import level11 from '../maps/level-9';
 import level12 from '../maps/level-10';
 import level13 from '../maps/level-11';
+import level14 from '../maps/level-12';
 
 const levelsMap = {
   level1,
@@ -30,6 +31,7 @@ const levelsMap = {
   level11,
   level12,
   level13,
+  level14,
 };
 
 const TEXT_STYLE = {

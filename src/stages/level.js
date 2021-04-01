@@ -42,6 +42,8 @@ import level10 from '../maps/level-8';
 import level11 from '../maps/level-9';
 import level12 from '../maps/level-10';
 import level13 from '../maps/level-11';
+// level 14 такой себе
+import level14 from '../maps/level-12';
 
 import tilemap1 from '../tilemaps/tutorial-1';
 import tilemap2 from '../tilemaps/tutorial-2';
@@ -56,6 +58,7 @@ import tilemap10 from '../tilemaps/level-8';
 import tilemap11 from '../tilemaps/level-9';
 import tilemap12 from '../tilemaps/level-10';
 import tilemap13 from '../tilemaps/level-11';
+import tilemap14 from '../tilemaps/level-12';
 
 const levelsMap = {
   level1,
@@ -71,6 +74,7 @@ const levelsMap = {
   level11,
   level12,
   level13,
+  level14,
 };
 
 const tilemapsMap = {
@@ -87,6 +91,7 @@ const tilemapsMap = {
   tilemap11,
   tilemap12,
   tilemap13,
+  tilemap14,
 };
 
 const getCoord = value => value * CELL_SIZE + CELL_SIZE / 2 + 100;
