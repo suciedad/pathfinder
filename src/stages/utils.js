@@ -1,36 +1,18 @@
 export const getSpriteName = (x, y, map) => {
   const char = map[y].charAt(x);
+  const spriteNameMap = {
+    'x': 'empty-bounds',
+    '-': 'hover-block',
+    'R': 'hover-block',
+    'G': 'hover-block',
+    'B': 'hover-block',
+    'Y': 'hover-block',
+    'F': 'hover-block',
+    'I': 'infirmary',
+    'P': 'player',
+  };
 
-  switch (char) {
-    case 'x':
-      return 'empty-bounds';
-      // return 'wall';
-
-    case '-':
-      return 'hover-block';
-
-    case 'R':
-      return 'hover-block';
-      // return 'red-room';
-
-    case 'G':
-      return 'hover-block';
-      // return 'green-room';
-
-    case 'B':
-      return 'hover-block';
-      // return 'blue-room';
-
-    case 'Y':
-      return 'hover-block';
-      // return 'yellow-room';
-
-    case 'I':
-      return 'infirmary';
-
-    case 'P':
-      return 'player';
-  }
+  return spriteNameMap[char];
 };
 
 export const getRoomCoords = (key, map) => {
@@ -58,14 +40,9 @@ export const getRoomCoordsByPlayerColor = (color, map) => {
   return getRoomCoords(key, map);
 }
 
-export const isFloor = (block) => (
-  block === '-' ||
-  block === 'R' ||
-  block === 'G' ||
-  block === 'B' ||
-  block === 'Y' ||
-  block === 'I'
-);
+const floorBlocks = ['-', 'R', 'G', 'B', 'Y', 'I', 'F'];
+
+export const isFloor = (block) => floorBlocks.includes(block);
 
 const range = (from, to) => {
   return Array.from(

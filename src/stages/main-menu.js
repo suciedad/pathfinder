@@ -28,18 +28,21 @@ export class MainMenu extends Scene {
   preload() { }
 
   create() {
+    // Кнопка из компонента
     // const bubu = new Button(this, 300, 200, {'Test Button Text'}, 'main-menu-button');
     // console.log(bubu);
     // bubu.onClick(() => console.log('clicking was'))
-    const bar = new ProgressBar(this, 300, 200, 0, 100, 23, {
-      bgColor: 0xffff00,
-      barColor: 0x00ff00,
-      width: 250,
-      height: 30,
-      padding: 4,
-      borderRadius: 5,
-    });
-    setInterval(() => bar.setValue(bar.value + 1), 300);
+
+    // Прогресс из компонента
+    // const bar = new ProgressBar(this, 300, 200, 0, 100, 23, {
+    //   bgColor: 0xffff00,
+    //   barColor: 0x00ff00,
+    //   width: 250,
+    //   height: 30,
+    //   padding: 4,
+    //   borderRadius: 5,
+    // });
+    // setInterval(() => bar.setValue(bar.value + 1), 300);
 
     this.logo = this.add.sprite(APP_SIZE.WIDTH * 0.5, 175, 'logo')
 

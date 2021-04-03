@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Actions, Scene } from 'phaser';
 import { SCENE_KEY } from '../constants/scene-key';
 import { APP_SIZE } from '../constants/app';
 
@@ -41,15 +41,15 @@ const TEXT_STYLE = {
   },
 };
 
-const MAX_IN_ROW = 6;
-const MARGIN = 25;
-const SIZE = 69;
+const GRID_WIDTH = 9;
+const GRID_HEIGHT = 9;
+const CELL_SIZE = 100;
 
 export class LevelSelection extends Scene {
   constructor() {
     super({ key: SCENE_KEY.LEVEL_SELECTION });
 
-    this.buttons = { back: null };
+    this.buttons = { back: null, level: null };
   }
 
   preload() { }
@@ -59,23 +59,35 @@ export class LevelSelection extends Scene {
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.backClickHandler());
 
+    this.buttons.level = this.add.group();
+
     for (let i = 1; i <= Object.keys(levelsMap).length; i += 1) {
       const level = levelsMap[`level${i}`];
       const { map, players } = level;
-      const fullSize = (SIZE * MAX_IN_ROW + MARGIN * (MAX_IN_ROW - 1));
-      const x = i === MAX_IN_ROW
-        ? 25 + fullSize * 0.43 + (MAX_IN_ROW - 1) * (SIZE + MARGIN)
-        : 25 + fullSize * 0.43 + (i % MAX_IN_ROW - 1) * (SIZE + MARGIN);
-      const y = 250 + Math.floor(i / (MAX_IN_ROW + 1)) * (SIZE + MARGIN);
+      const levelButton = this.add.container();
 
-      this.buttons[`level${i}`] = this.add.sprite(x, y, 'select-level-button')
+      const button = this.add.sprite(0, 0, 'select-level-button')
         .setInteractive({ useHandCursor: true })
         .on('pointerdown', () => this.levelClickHandler(map, players, i));
 
-      this.add.text(x - 10, y - 23, `${i}`, TEXT_STYLE.LEVEL)
+      const text = this.add.text(-20, -20, `${i}`, TEXT_STYLE.LEVEL)
         .setInteractive({ useHandCursor: true })
         .on('pointerdown', () => this.levelClickHandler(map, players, i));
+
+      levelButton.add([button, text]);
+
+      this.buttons.level.add(levelButton);
     }
+
+    Actions.GridAlign(this.buttons.level.getChildren(), {
+      width: GRID_WIDTH,
+      height: GRID_HEIGHT,
+      cellWidth: CELL_SIZE,
+      cellHeight: CELL_SIZE,
+      position: 6,
+      x: 100,
+      y: 200
+    });
   }
 
   backClickHandler() {

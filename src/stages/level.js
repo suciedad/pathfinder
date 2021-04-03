@@ -42,7 +42,6 @@ import level10 from '../maps/level-8';
 import level11 from '../maps/level-9';
 import level12 from '../maps/level-10';
 import level13 from '../maps/level-11';
-// level 14 такой себе
 import level14 from '../maps/level-12';
 
 import tilemap1 from '../tilemaps/tutorial-1';
@@ -109,6 +108,9 @@ export class Level extends Scene {
 
     this.back = null;
 
+    // TODO: Падающие платформы
+    // this.fb = null;
+
     this.players = players.reduce((acc, { color, position }) => {
       const { x, y } = position;
 
@@ -154,8 +156,11 @@ export class Level extends Scene {
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.events.emit('go_to_menu'));
 
+    // Загружаем карту тайлов в соответствии с выбранным уровнем
     const tilemap = tilemapsMap[`tilemap${level}`];
 
+    // По карте тайлов рисуем спрайты блоков
+    // Эти спрайты не влияют на геймплей, рисуются чисто для отображения
     for (let y = 0; y < map.length; y += 1) {
       for (let x = 0; x < map[y].length; x += 1) {
         this.add.sprite(
@@ -166,6 +171,51 @@ export class Level extends Scene {
       }
     }
 
+    // // TODO: Падающие платформы
+    // // По карте тайлов рисуем слоем сверху падающие блоки
+    // // Нужны для интеракции игрока с ними, когда он их пересечет они исчезают
+    // for (let y = 0; y < map.length; y += 1) {
+    //   for (let x = 0; x < map[y].length; x += 1) {
+    //     if (tilemap[y][x] === 'fc') {
+    //       this.fb = this.physics.add.image(
+    //         getCoord(x),
+    //         getCoord(y),
+    //         'h1',
+    //       );
+    //       this.fb.isFallen = false;
+
+    //       const playerSprites = [
+    //         this.players.blue.sprite,
+    //         // this.players.green.sprite,
+    //         // this.players.red.sprite,
+    //         this.players.yellow.sprite,
+    //       ];
+
+    //       this.fb.alpha = 0;
+
+    //       this.physics.add.overlap(this.fb, playerSprites, (self, another) => {
+    //         console.log('OVERLAPPED!!!!!!');
+
+    //         if (this.fb.isFallen) {
+    //           self.body.enable = false;
+    //           another.body.enable = false;
+
+    //           Object.keys(this.players).forEach(key => {
+    //             const player = this.players[key];
+    //             const { tween } = player;
+    //             tween.stop()
+    //           });
+
+    //           return this.events.emit('fail');
+    //         }
+    //       }, null, this);
+    //     }
+    //   }
+    // }
+
+    // По карте рисуем вторым слоем спрайты для интерактивности
+    // По этим спрайтам определяем на какие клетки можно кликать
+    // Кликабельные клетки при наведении подсвечиваются полупрозрачным квадратом
     for (let y = 0; y < map.length; y += 1) {
       for (let x = 0; x < map[y].length; x += 1) {
         let item = this.add.sprite(
@@ -179,6 +229,7 @@ export class Level extends Scene {
           item.input.alwaysEnabled = true;
           item.alpha = 0;
           item
+            // Если выбран персонаж, то подсветка работает на 0.2, если нет, но не подсвечиваем
             .on('pointerover', () => item.alpha = this.editablePlayer ? 0.2 : 0)
             .on('pointerout', () => item.alpha = 0)
             .on('pointerdown', () => {
@@ -410,6 +461,19 @@ export class Level extends Scene {
   }
 
   update() {
+    // TODO: Падающие платформы
+    // if (!this.fb.isFallen) {
+    //   // Проверка на то, что спрайт игрока "вышел" из спрайта падающей платформы
+    //   if (this.fb.body.embedded) {
+    //     this.fb.body.touching.none = false;
+    //   }
+
+    //   if (this.fb.body.touching.none && !this.fb.body.wasTouching.none) {
+    //     this.fb.isFallen = true;
+    //     this.fb.alpha = 1;
+    //   }
+    // }
+
     if (this.isStarted) {
       Object.keys(this.players).forEach(key => {
         const player = this.players[key];
