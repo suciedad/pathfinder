@@ -83,7 +83,16 @@ const tilemapsMap = {
   tilemap16, tilemap17, tilemap18, tilemap19,
 };
 
-const getCoord = value => value * CELL_SIZE + CELL_SIZE / 2 + 100;
+const getCoord = value => value * CELL_SIZE + CELL_SIZE * 0.5 + 100;
+
+const isCollide = (obj1, obj2) => {
+  const xDiff = Math.abs(obj1.x - obj2.x);
+  const yDiff = Math.abs(obj1.y - obj2.y);
+  const xMaxDiff = obj1.width * 0.5 + obj2.width * 0.5;
+  const yMaxDiff = obj1.height * 0.5 + obj2.height * 0.5;
+
+  return xDiff < xMaxDiff && yDiff < yMaxDiff;
+}
 
 export class Level extends Scene {
   constructor() {
@@ -98,8 +107,7 @@ export class Level extends Scene {
 
     this.back = null;
 
-    // TODO: Падающие платформы
-    // this.fb = null;
+    this.fallingPlatforms = [];
 
     this.players = players.reduce((acc, { color, position }) => {
       const { x, y } = position;
@@ -161,47 +169,49 @@ export class Level extends Scene {
       }
     }
 
-    // // TODO: Падающие платформы
-    // // По карте тайлов рисуем слоем сверху падающие блоки
-    // // Нужны для интеракции игрока с ними, когда он их пересечет они исчезают
-    // for (let y = 0; y < map.length; y += 1) {
-    //   for (let x = 0; x < map[y].length; x += 1) {
-    //     if (tilemap[y][x] === 'fc') {
-    //       this.fb = this.physics.add.image(
-    //         getCoord(x),
-    //         getCoord(y),
-    //         'h1',
-    //       );
-    //       this.fb.isFallen = false;
+    // По карте тайлов рисуем слоем сверху падающие блоки
+    // Нужны для интеракции игрока с ними, когда он их пересечет они исчезают
+    for (let y = 0; y < map.length; y += 1) {
+      for (let x = 0; x < map[y].length; x += 1) {
+        if (tilemap[y][x] === 'fc') {
+          const playerSprites = Object.keys(this.players).map(key => {
+            const player = this.players[key];
 
-    //       const playerSprites = [
-    //         this.players.blue.sprite,
-    //         // this.players.green.sprite,
-    //         // this.players.red.sprite,
-    //         this.players.yellow.sprite,
-    //       ];
+            return player.sprite;
+          });
 
-    //       this.fb.alpha = 0;
+          const platform = this.physics.add.image(
+            getCoord(x),
+            getCoord(y),
+            'h1',
+          );
 
-    //       this.physics.add.overlap(this.fb, playerSprites, (self, another) => {
-    //         console.log('OVERLAPPED!!!!!!');
+          platform.isFallen = false;
+          platform.alpha = 0;
 
-    //         if (this.fb.isFallen) {
-    //           self.body.enable = false;
-    //           another.body.enable = false;
+          this.physics.add.overlap(platform, playerSprites, (self, another) => {
+            if (!self.collidedPlayer && !platform.isFallen) {
+              self.collidedPlayer = another;
+            }
 
-    //           Object.keys(this.players).forEach(key => {
-    //             const player = this.players[key];
-    //             const { tween } = player;
-    //             tween.stop()
-    //           });
+            if (platform.isFallen) {
+              self.body.enable = false;
+              another.body.enable = false;
 
-    //           return this.events.emit('fail');
-    //         }
-    //       }, null, this);
-    //     }
-    //   }
-    // }
+              Object.keys(this.players).forEach(key => {
+                const player = this.players[key];
+                const { tween } = player;
+                tween.stop()
+              });
+
+              return this.events.emit('fail');
+            }
+          }, null, this);
+
+          this.fallingPlatforms.push(platform)
+        }
+      }
+    }
 
     // По карте рисуем вторым слоем спрайты для интерактивности
     // По этим спрайтам определяем на какие клетки можно кликать
@@ -451,18 +461,17 @@ export class Level extends Scene {
   }
 
   update() {
-    // TODO: Падающие платформы
-    // if (!this.fb.isFallen) {
-    //   // Проверка на то, что спрайт игрока "вышел" из спрайта падающей платформы
-    //   if (this.fb.body.embedded) {
-    //     this.fb.body.touching.none = false;
-    //   }
+    this.fallingPlatforms.forEach(platform => {
+      if (platform.collidedPlayer) {
+        const playerGoAwayFromPlatform = !isCollide(platform, platform.collidedPlayer)
 
-    //   if (this.fb.body.touching.none && !this.fb.body.wasTouching.none) {
-    //     this.fb.isFallen = true;
-    //     this.fb.alpha = 1;
-    //   }
-    // }
+        if (playerGoAwayFromPlatform) {
+          platform.collidedPlayer = null;
+          platform.isFallen = true;
+          platform.alpha = 1;
+        }
+      }
+    });
 
     if (this.isStarted) {
       Object.keys(this.players).forEach(key => {

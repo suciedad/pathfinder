@@ -10,19 +10,6 @@ const map = [
   'xxxxxxx',
 ];
 
-// TODO: Падающие платформы
-// Для тестирования падающей платформы
-// const players = [
-//   {
-//     color: 'blue',
-//     position: { x: 4, y: 4 },
-//   },
-//   {
-//     color: 'yellow',
-//     position: { x: 4, y: 6 },
-//   },
-// ];
-
 const players = [
   {
     color: 'red',

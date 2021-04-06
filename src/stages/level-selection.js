@@ -36,8 +36,8 @@ const TEXT_STYLE = {
   },
 };
 
-const GRID_WIDTH = 9;
-const GRID_HEIGHT = 9;
+const GRID_WIDTH = 7;
+const GRID_HEIGHT = 7;
 const CELL_SIZE = 100;
 
 export class LevelSelection extends Scene {
