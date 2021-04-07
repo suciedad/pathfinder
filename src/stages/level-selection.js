@@ -21,12 +21,13 @@ import level16 from '../maps/level-14';
 import level17 from '../maps/level-15';
 import level18 from '../maps/level-16';
 import level19 from '../maps/level-17';
+import level20 from '../maps/level-18';
 
 const levelsMap = {
   level1, level2, level3, level4, level5,
   level6, level7, level8, level9, level10,
   level11, level12, level13, level14, level15,
-  level16, level17, level18, level19,
+  level16, level17, level18, level19, level20,
 };
 
 const TEXT_STYLE = {
