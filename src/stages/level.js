@@ -29,69 +29,8 @@ import { TEXT } from '../constants/text';
 import { FailPopup } from '../components/fail-popup';
 import { SuccessPopup } from '../components/success-popup';
 
-import level1 from '../maps/tutorial-1';
-import level2 from '../maps/tutorial-2';
-import level3 from '../maps/level-1';
-import level4 from '../maps/level-2';
-import level5 from '../maps/level-3';
-import level6 from '../maps/level-4';
-import level7 from '../maps/level-5';
-import level8 from '../maps/level-6';
-import level9 from '../maps/level-7';
-import level10 from '../maps/level-8';
-import level11 from '../maps/level-9';
-import level12 from '../maps/level-10';
-import level13 from '../maps/level-11';
-import level14 from '../maps/level-12';
-import level15 from '../maps/level-13';
-import level16 from '../maps/level-14';
-import level17 from '../maps/level-15';
-import level18 from '../maps/level-16';
-import level19 from '../maps/level-17';
-import level20 from '../maps/level-18';
-import level21 from '../maps/level-19';
-import level22 from '../maps/level-20';
-import level23 from '../maps/level-21';
-
-import tilemap1 from '../tilemaps/tutorial-1';
-import tilemap2 from '../tilemaps/tutorial-2';
-import tilemap3 from '../tilemaps/level-1';
-import tilemap4 from '../tilemaps/level-2';
-import tilemap5 from '../tilemaps/level-3';
-import tilemap6 from '../tilemaps/level-4';
-import tilemap7 from '../tilemaps/level-5';
-import tilemap8 from '../tilemaps/level-6';
-import tilemap9 from '../tilemaps/level-7';
-import tilemap10 from '../tilemaps/level-8';
-import tilemap11 from '../tilemaps/level-9';
-import tilemap12 from '../tilemaps/level-10';
-import tilemap13 from '../tilemaps/level-11';
-import tilemap14 from '../tilemaps/level-12';
-import tilemap15 from '../tilemaps/level-13';
-import tilemap16 from '../tilemaps/level-14';
-import tilemap17 from '../tilemaps/level-15';
-import tilemap18 from '../tilemaps/level-16';
-import tilemap19 from '../tilemaps/level-17';
-import tilemap20 from '../tilemaps/level-18';
-import tilemap21 from '../tilemaps/level-19';
-import tilemap22 from '../tilemaps/level-20';
-import tilemap23 from '../tilemaps/level-21';
-
-const levelsMap = {
-  level1, level2, level3, level4, level5,
-  level6, level7, level8, level9, level10,
-  level11, level12, level13, level14, level15,
-  level16, level17, level18, level19, level20,
-  level21, level22, level23,
-};
-
-const tilemapsMap = {
-  tilemap1, tilemap2, tilemap3, tilemap4, tilemap5,
-  tilemap6, tilemap7, tilemap8, tilemap9, tilemap10,
-  tilemap11, tilemap12, tilemap13, tilemap14, tilemap15,
-  tilemap16, tilemap17, tilemap18, tilemap19, tilemap20,
-  tilemap21, tilemap22, tilemap23,
-};
+import levelsMap from '../maps/index';
+import tilemapsMap from '../tilemaps/index';
 
 const getCoord = value => value * CELL_SIZE + CELL_SIZE * 0.5 + 100;
 

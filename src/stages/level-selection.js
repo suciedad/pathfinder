@@ -2,37 +2,7 @@ import { Actions, Scene } from 'phaser';
 import { SCENE_KEY } from '../constants/scene-key';
 import { APP_SIZE } from '../constants/app';
 
-import level1 from '../maps/tutorial-1';
-import level2 from '../maps/tutorial-2';
-import level3 from '../maps/level-1';
-import level4 from '../maps/level-2';
-import level5 from '../maps/level-3';
-import level6 from '../maps/level-4';
-import level7 from '../maps/level-5';
-import level8 from '../maps/level-6';
-import level9 from '../maps/level-7';
-import level10 from '../maps/level-8';
-import level11 from '../maps/level-9';
-import level12 from '../maps/level-10';
-import level13 from '../maps/level-11';
-import level14 from '../maps/level-12';
-import level15 from '../maps/level-13';
-import level16 from '../maps/level-14';
-import level17 from '../maps/level-15';
-import level18 from '../maps/level-16';
-import level19 from '../maps/level-17';
-import level20 from '../maps/level-18';
-import level21 from '../maps/level-19';
-import level22 from '../maps/level-20';
-import level23 from '../maps/level-21';
-
-const levelsMap = {
-  level1, level2, level3, level4, level5,
-  level6, level7, level8, level9, level10,
-  level11, level12, level13, level14, level15,
-  level16, level17, level18, level19, level20,
-  level21, level22, level23,
-};
+import levelsMap from '../maps/index';
 
 const TEXT_STYLE = {
   LEVEL: {
