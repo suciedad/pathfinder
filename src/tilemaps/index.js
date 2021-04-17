@@ -21,6 +21,7 @@ import tilemap20 from './level-18';
 import tilemap21 from './level-19';
 import tilemap22 from './level-20';
 import tilemap23 from './level-21';
+import tilemap24 from './level-22';
 
 export default {
   tilemap1,
@@ -46,4 +47,5 @@ export default {
   tilemap21,
   tilemap22,
   tilemap23,
+  tilemap24,
 }

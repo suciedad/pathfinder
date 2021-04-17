@@ -21,6 +21,7 @@ import level20 from './level-18';
 import level21 from './level-19';
 import level22 from './level-20';
 import level23 from './level-21';
+import level24 from './level-22';
 
 export default {
   level1,
@@ -46,4 +47,5 @@ export default {
   level21,
   level22,
   level23,
+  level24,
 }
